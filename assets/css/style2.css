@@ -16,8 +16,8 @@
     /* Change favorite color */
     --hue-color: 250;
     /*Purple 250 - Green 142 - Blue 230 - Pink 340*/
-    /* HSL color mode */
-    --first-color: hsl(var(--hue-color), 69%, 61%);
+    /* HSL color mode theme dark to change */
+    --first-color: 	hsl(199, 83%, 47%);
     --first-color-second: hsl(var(--hue-color), 69%, 61%);
     --first-color-alt: hsl(var(--hue-color), 57%, 53%);
     --first-color-lighter: hsl(var(--hue-color), 92%, 85%);
@@ -101,6 +101,28 @@ body.dark-theme {
   color: var(--first-color);
 }
 
+body.dark-theme {
+  background-color: #040b14;
+  color: #fff;
+  /* Add more styles for dark theme as needed */
+}
+
+body.dark-theme .custom-hr {
+  background-color: #173b6c; /* Change this to the desired color for the dark theme */
+}
+body.dark-theme .section-title h2 {
+  color: #149DDD; /* Change this to the desired color for the dark theme */
+}
+body.dark-theme .about .content h3 {
+  color: #149DDD; /* Change this to the desired color for the dark theme */
+}
+
+body.dark-theme .facts .count-box span{
+  color: #149DDD; /* Change this to the desired color for the dark theme */
+}
+body.dark-theme .facts .count-box p{
+  color: #fff; /* Change this to the desired color for the dark theme */
+}
 /*==================== BASE ====================*/
 
 ul {
@@ -116,7 +138,13 @@ img {
   height: auto;
 }
 
+.project-card-height {
+  height: 500px; /* Change this to your desired height */
+}
+
 /*==================== CARDS ====================*/
+
+
 
 @import url('https://fonts.googleapis.com/css?family=Cardo:400i|Rubik:400,700&display=swap');
 
