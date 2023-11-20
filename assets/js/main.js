@@ -61,6 +61,23 @@
   window.addEventListener('load', navbarlinksActive)
   onscroll(document, navbarlinksActive)
 
+
+  //*** Skills Progress */
+
+  document.addEventListener("DOMContentLoaded", function () {
+    // Get all elements with class 'skills__data'
+    var skillBars = document.querySelectorAll(".skills__data");
+
+    // Iterate through each 'skills__data' element
+    skillBars.forEach(function (bar) {
+        // Get the percentage value within the current 'skills__data' element
+        var percentage = bar.querySelector(".skills__number").textContent.replace('%', '');
+
+        // Set the width of .skills__cv based on the percentage value
+        bar.querySelector(".skills__progress").style.width = percentage + "%";
+    });
+});
+  
   /**
    * Scrolls to an element with header offset
    */
@@ -387,6 +404,11 @@ let swiperTestimonial = new Swiper('.testimonial__container', {
         },
     }
 })
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Get the percentage value
+
+});
 
 
 /*==================== SCROLL SECTIONS ACTIVE LINK ====================*/
