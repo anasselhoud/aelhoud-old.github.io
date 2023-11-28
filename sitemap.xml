@@ -6,17 +6,17 @@
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
 <url>
-  <loc>https://anasselhoud.github.io/</loc>
+  <loc>https://elhoud.me/</loc>
   <lastmod>2023-11-28T19:00:00+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
-  <loc>https://anasselhoud.github.io/phd-thesis.html</loc>
+  <loc>https://elhoud.me/phd-thesis.html</loc>
   <lastmod>2023-11-28T19:00:00+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://anasselhoud.github.io/index.html</loc>
+  <loc>https://elhoud.me/index.html</loc>
   <lastmod>2023-11-28T19:00:00+00:00</lastmod>
   <priority>0.80</priority>
 </url>
