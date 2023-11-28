@@ -128,6 +128,85 @@ body.dark-theme .breadcrumbs {
   background-color: #173b6c; /* Change this to the desired color for the dark theme */
 }
 
+
+
+
+/* ====================== Articles ====================== */
+
+.buttons {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start; }
+  .buttons .button {
+    margin-bottom: 0.5rem; }
+    .buttons .button:not(:last-child):not(.is-fullwidth) {
+      margin-right: 0.5rem; }
+  .buttons:last-child {
+    margin-bottom: -0.5rem; }
+  .buttons:not(:last-child) {
+    margin-bottom: 1rem; }
+  .buttons.are-small .button:not(.is-normal):not(.is-medium):not(.is-large) {
+    border-radius: 2px;
+    font-size: 0.75rem; }
+  .buttons.are-medium .button:not(.is-small):not(.is-normal):not(.is-large) {
+    font-size: 1.25rem; }
+  .buttons.are-large .button:not(.is-small):not(.is-normal):not(.is-medium) {
+    font-size: 1.5rem; }
+  .buttons.has-addons .button:not(:first-child) {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0; }
+  .buttons.has-addons .button:not(:last-child) {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    margin-right: -1px; }
+  .buttons.has-addons .button:last-child {
+    margin-right: 0; }
+  .buttons.has-addons .button:hover, .buttons.has-addons .button.is-hovered {
+    z-index: 2; }
+  .buttons.has-addons .button:focus, .buttons.has-addons .button.is-focused, .buttons.has-addons .button:active, .buttons.has-addons .button.is-active, .buttons.has-addons .button.is-selected {
+    z-index: 3; }
+    .buttons.has-addons .button:focus:hover, .buttons.has-addons .button.is-focused:hover, .buttons.has-addons .button:active:hover, .buttons.has-addons .button.is-active:hover, .buttons.has-addons .button.is-selected:hover {
+      z-index: 4; }
+  .buttons.has-addons .button.is-expanded {
+    flex-grow: 1;
+    flex-shrink: 1; }
+  .buttons.is-centered {
+    justify-content: center; }
+    .buttons.is-centered:not(.has-addons) .button:not(.is-fullwidth) {
+      margin-left: 0.25rem;
+      margin-right: 0.25rem; }
+  .buttons.is-right {
+    justify-content: flex-end; }
+    .buttons.is-right:not(.has-addons) .button:not(.is-fullwidth) {
+      margin-left: 0.25rem;
+      margin-right: 0.25rem; }
+
+.container-paper {
+  flex-grow: 1;
+  margin: 0 auto;
+  position: relative;
+  width: auto; }
+  .container-paper.is-fluid {
+    max-width: none;
+    padding-left: 32px;
+    padding-right: 32px;
+    width: 100%; }
+  @media screen and (min-width: 1024px) {
+    .container-paper {
+      max-width: 960px; } }
+  @media screen and (max-width: 1215px) {
+    .container-paper.is-widescreen {
+      max-width: 1152px; } }
+  @media screen and (max-width: 1407px) {
+    .container-paper.is-fullhd {
+      max-width: 1344px; } }
+  @media screen and (min-width: 1216px) {
+    .container-paper {
+      max-width: 1152px; } }
+  @media screen and (min-width: 1408px) {
+    .container-paper {
+      max-width: 1344px; } }
 /*==================== BASE ====================*/
 
 ul {
