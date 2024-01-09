@@ -7,11 +7,17 @@
 
 <url>
   <loc>https://elhoud.me/</loc>
+  <image:image>
+        <image:loc>https://elhoud.me/assets/img/anass-elhoud-img.jpg</image:loc>
+    </image:image>
   <lastmod>2023-12-01T10:00:00+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
   <loc>https://elhoud.me/phd-thesis.html</loc>
+  <image:image>
+        <image:loc>https://elhoud.me/assets/img/anass-elhoud-img.jpg</image:loc>
+    </image:image>
   <lastmod>2023-12-01T10:00:00+00:00</lastmod>
   <priority>0.90</priority>
 </url>
@@ -20,5 +26,4 @@
   <lastmod>2023-12-01T10:00:00+00:00</lastmod>
   <priority>0.90</priority>
 </url>
-
 </urlset>
