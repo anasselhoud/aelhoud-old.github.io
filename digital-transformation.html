@@ -30,13 +30,13 @@
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
-  <!-- =======================================================
-  * Template Name: iPortfolio
-  * Updated: Sep 18 2023 with Bootstrap v5.3.2
-  * Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+<script src="https://use.fontawesome.com/f5ea91e308.js"></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+<script src="assets/js/certificate.js"></script>
+
 </head>
 
 <body>
@@ -74,7 +74,7 @@
       </nav><!-- .nav-menu -->
     </div>
   </header><!-- End Header -->
-
+  
   <main id="main">
 
     <!-- ======= Breadcrumbs ======= -->
@@ -91,8 +91,9 @@
 
       </div>
     </section><!-- End Breadcrumbs -->
-
+    
     <section class="inner-page">
+      <div id="app"></div>
       <div class="container">
         <p>
           Along with my academic accomplishments, which include two engineering degrees and a PhD in artificial intelligence, I acquired expertise in digital transformation and innovation strategy through my varied work engagements. I have had key responsibilities in developing and executing digital solutions that are suited to the demands of the industry in a variety of capacities within departments of innovation and digitalization. Furthermore, I have been contributing and leading projects to integrate Industry 4.0 technologies into companies' operations and help them achieve their strategic goals.
@@ -100,6 +101,8 @@
         <p>
           I've taken part in several training courses and earned several professional certifications in this field:
         </p>
+        
+        
         <div class="slidercert owl-carousel">
           <div class="certificatecard">
               <div class="img">
@@ -134,7 +137,7 @@
                     Delivered by University System of Georgia
                   </div>
                   <p>
-                    1 month (40 hoursspecialization in Six Sigma for Yellow Belt Level. 
+                    1 month (40 hours) specialization in Six Sigma for Yellow Belt Level. 
                   </p>
                   <a href="https://www.coursera.org/account/accomplishments/specialization/certificate/CMXSFXWN6575" target="_blank">
                       <button>
@@ -175,9 +178,14 @@
   <script src="assets/vendor/typed.js/typed.umd.js"></script>
   <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
+  
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/certificate.js"></script>
+  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+<script src="assets/js/certificate.js"></script>
   <script>
     $(".slidercert").owlCarousel({
         loop: true,
@@ -186,6 +194,7 @@
         autoplayHoverPause: true,
     });
 </script>
+
 </body>
 
 </html>
