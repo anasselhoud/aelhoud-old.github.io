@@ -235,7 +235,7 @@ img {
 .custom-div,
 .custom-input,
 .custom-p {
-    font-family: "Open Sans";
+  font-family: FontAwesome;
     size: 8px;
     margin: 0px;
 }
