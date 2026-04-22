@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anass Elhoud — AI & Data Strategy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080A0E;
+    --bg2: #0D1117;
+    --bg3: #111822;
+    --accent: #C8A96E;
+    --accent2: #E8D5A3;
+    --text: #F0EDE6;
+    --muted: #8A8580;
+    --border: rgba(200,169,110,0.15);
+    --border2: rgba(200,169,110,0.08);
+    --glass: rgba(13,17,23,0.7);
+    --white: #F0EDE6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s ease;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(200,169,110,0.4);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transition: all 0.15s ease;
+  }
+
+  /* Noise texture overlay */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.5rem 4rem;
+    display: flex; align-items: center; justify-content: space-between;
+    backdrop-filter: blur(20px);
+    background: rgba(8,10,14,0.6);
+    border-bottom: 1px solid var(--border2);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 300; letter-spacing: 0.15em;
+    color: var(--accent2); text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex; gap: 2.5rem; list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 1px; background: var(--accent);
+    transition: width 0.3s ease;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: 8rem 4rem 4rem 4rem;
+    position: relative; z-index: 1;
+  }
+
+  .hero-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 2rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 2rem; height: 1px; background: var(--accent);
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 6vw, 6rem);
+    font-weight: 300; line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+    color: var(--white);
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--accent);
+    display: block;
+  }
+
+  .hero-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.85rem; font-weight: 400;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 2.5rem;
+  }
+
+  .hero-bio {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-weight: 300;
+    line-height: 1.75; color: rgba(240,237,230,0.7);
+    max-width: 480px; margin-bottom: 3rem;
+  }
+
+  .hero-ctas {
+    display: flex; gap: 1.5rem; align-items: center;
+  }
+
+  .btn-primary {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.2em;
+    text-transform: uppercase; text-decoration: none;
+    color: var(--bg);
+    background: var(--accent);
+    padding: 0.9rem 2rem;
+    border: 1px solid var(--accent);
+    transition: all 0.3s ease;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+
+  .btn-primary:hover {
+    background: transparent;
+    color: var(--accent);
+  }
+
+  .btn-ghost {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.2em;
+    text-transform: uppercase; text-decoration: none;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.2rem;
+    transition: all 0.3s ease;
+  }
+  .btn-ghost:hover { color: var(--accent); border-color: var(--accent); }
+
+  .hero-right {
+    position: relative; overflow: hidden;
+  }
+
+  .hero-img-container {
+    position: absolute; inset: 0;
+    overflow: hidden;
+  }
+
+  .hero-img-container img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: top center;
+    filter: grayscale(30%) contrast(1.1);
+    opacity: 0.6;
+    transition: transform 0.5s ease;
+  }
+
+  .hero-img-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, var(--bg) 0%, transparent 30%),
+                linear-gradient(to top, var(--bg) 0%, transparent 25%);
+  }
+
+  /* Grid lines decoration */
+  .hero-grid {
+    position: absolute; inset: 0; pointer-events: none; z-index: 0;
+    background-image:
+      linear-gradient(rgba(200,169,110,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,169,110,0.04) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+
+  .hero-stats {
+    position: absolute; bottom: 4rem; right: 4rem;
+    display: flex; gap: 3rem; z-index: 2;
+  }
+
+  .stat-item { text-align: right; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem; font-weight: 300; color: var(--accent);
+    line-height: 1; display: block;
+  }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--muted);
+  }
+
+  /* Scroll indicator */
+  .scroll-indicator {
+    position: absolute; bottom: 2rem; left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    z-index: 2;
+  }
+
+  .scroll-indicator span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--muted);
+  }
+
+  .scroll-line {
+    width: 1px; height: 3rem;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.2); }
+  }
+
+  /* SECTION DEFAULTS */
+  section { position: relative; z-index: 1; }
+
+  .section-header {
+    display: flex; align-items: center; gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem; color: var(--accent);
+    letter-spacing: 0.2em;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    font-weight: 300; color: var(--white);
+    letter-spacing: -0.02em;
+  }
+
+  .section-line {
+    flex: 1; height: 1px; background: var(--border);
+  }
+
+  /* ABOUT */
+  #about {
+    padding: 8rem 4rem;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6rem;
+    align-items: start;
+  }
+
+  .about-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; line-height: 1.8; font-weight: 300;
+    color: rgba(240,237,230,0.8);
+  }
+
+  .about-text p { margin-bottom: 1.5rem; }
+
+  .about-text a {
+    color: var(--accent); text-decoration: none;
+    border-bottom: 1px solid rgba(200,169,110,0.3);
+    transition: border-color 0.3s;
+  }
+  .about-text a:hover { border-color: var(--accent); }
+
+  .about-side { display: flex; flex-direction: column; gap: 2rem; }
+
+  .about-detail {
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--accent);
+    background: var(--bg3);
+  }
+
+  .about-detail-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .about-detail-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem; color: var(--text);
+  }
+
+  .countries-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .country-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted);
+    padding: 0.4rem 0.6rem;
+    background: rgba(200,169,110,0.05);
+    border: 1px solid var(--border2);
+    text-align: center;
+    transition: all 0.2s;
+  }
+  .country-tag:hover { color: var(--accent); border-color: var(--border); }
+
+  /* EXPERTISE */
+  #expertise {
+    padding: 6rem 4rem;
+    background: var(--bg2);
+  }
+
+  .expertise-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px;
+    background: var(--border2);
+    border: 1px solid var(--border2);
+    margin-top: 4rem;
+  }
+
+  .expertise-card {
+    background: var(--bg2);
+    padding: 2.5rem;
+    transition: background 0.3s;
+    position: relative; overflow: hidden;
+  }
+
+  .expertise-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--accent), transparent);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .expertise-card:hover { background: var(--bg3); }
+  .expertise-card:hover::before { transform: scaleX(1); }
+
+  .expertise-icon {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem; color: var(--accent);
+    letter-spacing: 0.2em; margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+
+  .expertise-icon::before {
+    content: '';
+    display: inline-block; width: 1rem; height: 1px; background: var(--accent);
+  }
+
+  .expertise-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem; font-weight: 600;
+    color: var(--white); margin-bottom: 1rem;
+  }
+
+  .expertise-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; line-height: 1.7;
+    color: rgba(240,237,230,0.55);
+  }
+
+  .skill-bars { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
+  .skill-item {}
+  .skill-info {
+    display: flex; justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem; color: var(--muted); margin-bottom: 0.3rem;
+    letter-spacing: 0.1em;
+  }
+  .skill-track {
+    height: 1px; background: rgba(200,169,110,0.1);
+    position: relative;
+  }
+  .skill-fill {
+    position: absolute; top: 0; left: 0; bottom: 0;
+    background: var(--accent);
+    transition: width 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* PAPERS */
+  #papers {
+    padding: 8rem 4rem;
+  }
+
+  .papers-list {
+    margin-top: 4rem;
+    display: flex; flex-direction: column;
+  }
+
+  .paper-item {
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border2);
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 2rem; align-items: start;
+    transition: all 0.3s;
+    cursor: default;
+  }
+
+  .paper-item:hover { padding-left: 1rem; }
+
+  .paper-venue {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .paper-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-weight: 400;
+    color: var(--white); line-height: 1.4;
+    margin-bottom: 0.5rem;
+  }
+
+  .paper-authors {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem; font-style: italic;
+    color: var(--muted);
+  }
+
+  .paper-actions {
+    display: flex; gap: 0.75rem; align-items: center; padding-top: 0.25rem;
+  }
+
+  .paper-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem; letter-spacing: 0.15em;
+    text-transform: uppercase; text-decoration: none;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 0.4rem 0.8rem;
+    transition: all 0.3s;
+  }
+
+  .paper-link:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* EVENTS */
+  #events {
+    padding: 6rem 4rem;
+    background: var(--bg2);
+  }
+
+  .events-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    margin-top: 4rem;
+  }
+
+  .event-card {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    padding: 2rem;
+    position: relative;
+    transition: all 0.3s;
+    overflow: hidden;
+  }
+
+  .event-card:hover {
+    border-color: var(--border);
+    transform: translateY(-4px);
+  }
+
+  .event-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--bg); background: var(--accent);
+    padding: 0.3rem 0.6rem; display: inline-block;
+    margin-bottom: 1.5rem;
+  }
+
+  .event-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.95rem; font-weight: 600;
+    color: var(--white); margin-bottom: 0.5rem; line-height: 1.3;
+  }
+
+  .event-org {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; color: rgba(240,237,230,0.5);
+    margin-bottom: 1.5rem;
+  }
+
+  .event-meta {
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  .event-location {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem; color: var(--muted); letter-spacing: 0.1em;
+  }
+
+  .event-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem; color: var(--accent); letter-spacing: 0.1em;
+  }
+
+  /* COMPANIES */
+  #companies {
+    padding: 6rem 4rem;
+    border-top: 1px solid var(--border2);
+  }
+
+  .companies-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--muted); text-align: center; margin-bottom: 3rem;
+  }
+
+  .companies-row {
+    display: flex; align-items: center; justify-content: center;
+    gap: 4rem; flex-wrap: wrap;
+  }
+
+  .company-item {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem; font-weight: 600;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(240,237,230,0.25);
+    transition: color 0.3s;
+    text-decoration: none;
+  }
+
+  .company-item:hover { color: var(--accent2); }
+
+  /* INTERESTS */
+  #interests {
+    padding: 6rem 4rem;
+    background: var(--bg2);
+  }
+
+  .interests-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    margin-top: 4rem;
+  }
+
+  .interest-card {
+    padding: 2.5rem;
+    border: 1px solid var(--border2);
+    background: var(--bg);
+    position: relative; overflow: hidden;
+    text-decoration: none;
+    display: block;
+    transition: all 0.3s;
+  }
+
+  .interest-card:hover { border-color: var(--border); }
+
+  .interest-card::after {
+    content: '→';
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem; color: var(--accent);
+    position: absolute; bottom: 1.5rem; right: 1.5rem;
+    transition: transform 0.3s;
+  }
+
+  .interest-card:hover::after { transform: translate(4px, -4px); }
+
+  .interest-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem; letter-spacing: 0.25em;
+    color: rgba(200,169,110,0.4); margin-bottom: 1.5rem;
+  }
+
+  .interest-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem; font-weight: 300;
+    color: var(--white); margin-bottom: 0.75rem;
+  }
+
+  .interest-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--muted);
+  }
+
+  /* CONTACT */
+  #contact {
+    padding: 8rem 4rem;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start;
+  }
+
+  .contact-left .section-title { margin-bottom: 2rem; }
+
+  .contact-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; line-height: 1.8;
+    color: rgba(240,237,230,0.6);
+    margin-bottom: 3rem;
+  }
+
+  .contact-email {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-weight: 300;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(200,169,110,0.3);
+    padding-bottom: 0.5rem;
+    transition: border-color 0.3s;
+    display: inline-block;
+  }
+  .contact-email:hover { border-color: var(--accent); }
+
+  .contact-links {
+    margin-top: 3rem; display: flex; flex-direction: column; gap: 1rem;
+  }
+
+  .contact-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none;
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1rem;
+    border: 1px solid var(--border2);
+    transition: all 0.3s;
+  }
+
+  .contact-link:hover {
+    color: var(--accent); border-color: var(--border);
+    padding-left: 1.5rem;
+  }
+
+  .contact-link-arrow { color: var(--accent); margin-left: auto; }
+
+  .contact-right {
+    padding-top: 2rem;
+  }
+
+  .availability-badge {
+    display: inline-flex; align-items: center; gap: 0.75rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--text);
+    background: rgba(200,169,110,0.08);
+    border: 1px solid var(--border);
+    padding: 0.75rem 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .availability-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #5CCD8A;
+    box-shadow: 0 0 6px #5CCD8A;
+    animation: blink 2s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .contact-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 300; font-style: italic;
+    line-height: 1.5; color: rgba(240,237,230,0.4);
+    border-left: 2px solid var(--accent);
+    padding-left: 2rem;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 4rem;
+    border-top: 1px solid var(--border2);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem; font-weight: 300;
+    color: var(--muted); letter-spacing: 0.15em;
+  }
+
+  .footer-copy {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: rgba(138,133,128,0.5);
+  }
+
+  /* Animations */
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* Horizontal marquee for companies */
+  .marquee-wrapper { overflow: hidden; }
+  .marquee-track {
+    display: flex; gap: 5rem;
+    animation: marquee 20s linear infinite;
+    width: max-content;
+  }
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 1.5rem 2rem; }
+    .nav-links { display: none; }
+    #hero { grid-template-columns: 1fr; }
+    .hero-left { padding: 8rem 2rem 4rem; }
+    .hero-right { height: 50vh; }
+    .hero-stats { bottom: 2rem; right: 2rem; gap: 1.5rem; }
+    #about, #contact { grid-template-columns: 1fr; padding: 4rem 2rem; }
+    #expertise, #papers, #events, #companies, #interests { padding: 4rem 2rem; }
+    .expertise-grid, .events-grid, .interests-grid { grid-template-columns: 1fr; }
+    .hero-name { font-size: 3rem; }
+    .stat-num { font-size: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">Anass Elhoud</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#expertise">Expertise</a></li>
+    <li><a href="#papers">Research</a></li>
+    <li><a href="#events">Events</a></li>
+    <li><a href="#interests">Interests</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-left">
+    <div class="hero-tag">PhD · AI & Data Strategy</div>
+    <h1 class="hero-name">
+      Anass<br>
+      <em>Elhoud</em>
+    </h1>
+    <p class="hero-title">Digital Strategy Manager · FORVIA</p>
+    <p class="hero-bio">
+      Doctor in AI & Computer Science. Leading global digital transformation, Data & GenAI strategy at FORVIA. 
+      Laureate of Centrale Lyon & Arts et Métiers.
+    </p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary">Get in Touch →</a>
+      <a href="#papers" class="btn-ghost">View Research</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-container">
+      <img src="https://aelhoud.me/assets/img/IMG_6732.jpeg" alt="Anass Elhoud">
+      <div class="hero-img-overlay"></div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num">5+</span>
+        <span class="stat-label">Years XP</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">10+</span>
+        <span class="stat-label">Publications</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">16+</span>
+        <span class="stat-label">Countries</span>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- COMPANIES MARQUEE -->
+<section id="companies">
+  <p class="companies-label">Organizations &amp; Collaborations</p>
+  <div class="marquee-wrapper">
+    <div class="marquee-track">
+      <a href="https://forvia.com" class="company-item">FORVIA</a>
+      <a href="https://www.cea-tech.fr" class="company-item">CEA-Leti</a>
+      <a href="https://liris.cnrs.fr" class="company-item">LIRIS CNRS</a>
+      <a href="https://www.femto-st.fr" class="company-item">FEMTO-ST</a>
+      <a href="https://ec-lyon.fr" class="company-item">Centrale Lyon</a>
+      <a href="http://www.ensam-umi.ac.ma" class="company-item">Arts et Métiers</a>
+      <a href="https://forvia.com" class="company-item">FORVIA</a>
+      <a href="https://www.cea-tech.fr" class="company-item">CEA-Leti</a>
+      <a href="https://liris.cnrs.fr" class="company-item">LIRIS CNRS</a>
+      <a href="https://www.femto-st.fr" class="company-item">FEMTO-ST</a>
+      <a href="https://ec-lyon.fr" class="company-item">Centrale Lyon</a>
+      <a href="http://www.ensam-umi.ac.ma" class="company-item">Arts et Métiers</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-content reveal">
+    <div class="section-header">
+      <span class="section-num">01 —</span>
+      <h2 class="section-title">About</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="about-text">
+      <p>
+        French-Moroccan, Doctor in AI & Computer Science, Laureate of 
+        <a href="https://ec-lyon.fr">Centrale Lyon</a> & 
+        <a href="http://www.ensam-umi.ac.ma">Arts et Métiers</a> with double engineering degrees.
+      </p>
+      <p>
+        Currently a Digital Strategy Manager at <a href="https://forvia.com">FORVIA</a>, leading digital transformation projects, Data, AI & GenAI Roadmap at Global group level.
+      </p>
+      <p>
+        My areas of expertise include industrial AI, data science, digital transformation strategy and management. I am deeply invested in the innovation, development, implementation, and integration of AI within various industries while building global digital strategies.
+      </p>
+      <p>
+        As a tech enthusiast, I enjoy experimenting with single-board computers and microcontrollers like Raspberry Pi and Arduino, creating open-source AI models, and conducting penetration testing.
+      </p>
+    </div>
+  </div>
+  <div class="about-side reveal" style="transition-delay:0.2s">
+    <div class="about-detail">
+      <div class="about-detail-label">Location</div>
+      <div class="about-detail-value">France 🇫🇷</div>
+    </div>
+    <div class="about-detail">
+      <div class="about-detail-label">Current Role</div>
+      <div class="about-detail-value">Digital Strategy Manager, FORVIA</div>
+    </div>
+    <div class="about-detail">
+      <div class="about-detail-label">Education</div>
+      <div class="about-detail-value">PhD · Centrale Lyon · Arts et Métiers</div>
+    </div>
+    <div class="about-detail">
+      <div class="about-detail-label">Collaboration</div>
+      <div class="about-detail-value" style="color: #5CCD8A;">Available for projects</div>
+    </div>
+    <div class="about-detail">
+      <div class="about-detail-label">Countries Visited</div>
+      <div class="countries-grid">
+        <span class="country-tag">France</span><span class="country-tag">Morocco</span>
+        <span class="country-tag">Singapore</span><span class="country-tag">Spain</span>
+        <span class="country-tag">Germany</span><span class="country-tag">Malaysia</span>
+        <span class="country-tag">Switzerland</span><span class="country-tag">Netherlands</span>
+        <span class="country-tag">Italy</span><span class="country-tag">Turkey</span>
+        <span class="country-tag">Belgium</span><span class="country-tag">Greece</span>
+        <span class="country-tag">Hungary</span><span class="country-tag">Czech RC</span>
+        <span class="country-tag">Austria</span><span class="country-tag">Indonesia</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERTISE -->
+<section id="expertise">
+  <div style="max-width:1400px; margin:0 auto;">
+    <div class="section-header reveal">
+      <span class="section-num">02 —</span>
+      <h2 class="section-title">Expertise</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="expertise-grid reveal">
+      <div class="expertise-card">
+        <div class="expertise-icon">AI & Data Science</div>
+        <div class="expertise-name">Industrial AI & Machine Learning</div>
+        <div class="expertise-desc">Deep expertise across the full ML spectrum — from classical statistical methods to cutting-edge deep learning architectures and generative AI.</div>
+        <div class="skill-bars">
+          <div class="skill-item">
+            <div class="skill-info"><span>Machine Learning / DL</span><span>90%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="width:90%"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-info"><span>Computer Vision</span><span>80%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="width:80%"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-info"><span>Reinforcement Learning</span><span>90%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="width:90%"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-info"><span>Generative AI</span><span>70%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="width:70%"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="expertise-card">
+        <div class="expertise-icon">Engineering</div>
+        <div class="expertise-name">Cloud & MLOps Infrastructure</div>
+        <div class="expertise-desc">Building robust, scalable ML pipelines and cloud architectures for enterprise-grade AI deployment.</div>
+        <div class="skill-bars">
+          <div class="skill-item">
+            <div class="skill-info"><span>Python</span><span>95%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="width:95%"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-info"><span>Microsoft Azure</span><span>85%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="width:85%"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-info"><span>Docker & Kubernetes</span><span>80%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="width:80%"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-info"><span>SQL / Data Analytics</span><span>95%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="width:95%"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="expertise-card">
+        <div class="expertise-icon">Strategy</div>
+        <div class="expertise-name">Digital Transformation & Leadership</div>
+        <div class="expertise-desc">Translating complex AI capabilities into actionable business strategy and leading global digital transformation at scale.</div>
+        <div class="skill-bars">
+          <div class="skill-item">
+            <div class="skill-info"><span>Digital Strategy</span><span>95%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="width:95%"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-info"><span>Project Management</span><span>90%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="width:90%"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-info"><span>Technical Leadership</span><span>85%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="width:85%"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-info"><span>Innovation Management</span><span>90%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="width:90%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAPERS -->
+<section id="papers">
+  <div style="max-width:1400px; margin:0 auto;">
+    <div class="section-header reveal">
+      <span class="section-num">03 —</span>
+      <h2 class="section-title">Research</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="papers-list reveal">
+      <div class="paper-item">
+        <div>
+          <div class="paper-venue">AIAI 2024 — Corfu, Greece</div>
+          <div class="paper-title">Online Reinforcement Learning for Designing Automotive Hybrid Assembly Sequence: A Task Clustering-Guided Approach</div>
+          <div class="paper-authors"><strong>Anass Elhoud</strong>, Benoit Piranda, Raphael De Matos, Julien Bourgeois</div>
+        </div>
+        <div class="paper-actions">
+          <a href="#" class="paper-link">Read</a>
+          <a href="#" class="paper-link">Cite</a>
+        </div>
+      </div>
+      <div class="paper-item">
+        <div>
+          <div class="paper-venue">IEEM 2023 — Singapore</div>
+          <div class="paper-title">A Comparative Analysis of Hybrid Assembly Line Key Performance Indicators Between a Real-world Industrial Setting and a Fast Discrete Event Simulator</div>
+          <div class="paper-authors"><strong>Anass El Houd</strong>, Benoit Piranda, Raphael De Matos and Julien Bourgeois</div>
+        </div>
+        <div class="paper-actions">
+          <a href="https://aelhoud.me/assets/papers/Swarm_intelligence_based_framework_for_accelerated_and_optimized_assembly_line_design_in_the_automotive_industry.pdf" class="paper-link">Read</a>
+          <a href="#" class="paper-link">Cite</a>
+        </div>
+      </div>
+      <div class="paper-item">
+        <div>
+          <div class="paper-venue">Journal of Intelligent Manufacturing (IF8) — 2023</div>
+          <div class="paper-title">Swarm Intelligence-Based Framework for Accelerated and Optimized Assembly Line Design in the Automotive Industry</div>
+          <div class="paper-authors"><strong>Anass El Houd</strong>, Benoit Piranda, Raphael De Matos and Julien Bourgeois</div>
+        </div>
+        <div class="paper-actions">
+          <a href="https://aelhoud.me/assets/papers/Swarm_intelligence_based_framework_for_accelerated_and_optimized_assembly_line_design_in_the_automotive_industry.pdf" class="paper-link">Read</a>
+          <a href="#" class="paper-link">Cite</a>
+        </div>
+      </div>
+      <div class="paper-item">
+        <div>
+          <div class="paper-venue">AINA 2022 — Sydney, Australia</div>
+          <div class="paper-title">ManufactSim: Manufacturing Line Simulation using Heterogeneous Distributed Robots</div>
+          <div class="paper-authors">Benoit Piranda, Ishan Gautam, Jerome Meyer, <strong>Anass El Houd</strong>, Julien Bourgeois</div>
+        </div>
+        <div class="paper-actions">
+          <a href="https://www.researchgate.net/publication/359601087" class="paper-link">Read</a>
+          <a href="#" class="paper-link">Cite</a>
+        </div>
+      </div>
+      <div class="paper-item">
+        <div>
+          <div class="paper-venue">ICCCR 2022 — Shanghai, China</div>
+          <div class="paper-title">Parameters Correlation of Deep Learning Model for Visual Inspection in the Automotive Industry</div>
+          <div class="paper-authors">Charbel El Hachem, <strong>Anass El Houd</strong>, Painvin Loic, Gilles Perrot, Raphaël Couturier</div>
+        </div>
+        <div class="paper-actions">
+          <a href="https://aelhoud.me/assets/papers/Parameters_Correlation_of_Deep_Learning_Model_for_Visual_Inspection_in_the_Automotive_Industry.pdf" class="paper-link">Read</a>
+          <a href="#" class="paper-link">Cite</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section id="events">
+  <div style="max-width:1400px; margin:0 auto;">
+    <div class="section-header reveal">
+      <span class="section-num">04 —</span>
+      <h2 class="section-title">Events</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="events-grid reveal">
+      <div class="event-card">
+        <span class="event-type">Conference</span>
+        <div class="event-title">IEEM23 — Paper Presentation</div>
+        <div class="event-org">Industrial Engineering and Engineering Management</div>
+        <div class="event-meta">
+          <span class="event-location">Singapore</span>
+          <span class="event-date">Dec 2023</span>
+        </div>
+      </div>
+      <div class="event-card">
+        <span class="event-type">Invited Talk</span>
+        <div class="event-title">Introduction to AI & Manufacturing Line Design Automation</div>
+        <div class="event-org">Global Material Network Meeting @ FORVIA</div>
+        <div class="event-meta">
+          <span class="event-location">Germany</span>
+          <span class="event-date">Aug 2022</span>
+        </div>
+      </div>
+      <div class="event-card">
+        <span class="event-type">Seminar Talk</span>
+        <div class="event-title">AI for Automating the Manufacturing Line Design</div>
+        <div class="event-org">Young Scientists Day @ FORVIA</div>
+        <div class="event-meta">
+          <span class="event-location">France</span>
+          <span class="event-date">Jul 2022</span>
+        </div>
+      </div>
+      <div class="event-card">
+        <span class="event-type">Invited Talk</span>
+        <div class="event-title">A Brief Introduction to Natural Language Processing</div>
+        <div class="event-org">BlaBlaConf AI/Big Data Seminar</div>
+        <div class="event-meta">
+          <span class="event-location">Morocco</span>
+          <span class="event-date">Nov 2020</span>
+        </div>
+      </div>
+      <div class="event-card">
+        <span class="event-type">Hackathon</span>
+        <div class="event-title">Space Apps Global Problem Solver</div>
+        <div class="event-org">NASA Space Apps COVID-19 Challenge</div>
+        <div class="event-meta">
+          <span class="event-location">USA — Online</span>
+          <span class="event-date">May 2020</span>
+        </div>
+      </div>
+      <div class="event-card">
+        <span class="event-type">Hackathon</span>
+        <div class="event-title">Innovation Challenge Arabia</div>
+        <div class="event-org">Arab Congress of Innovation</div>
+        <div class="event-meta">
+          <span class="event-location">Morocco</span>
+          <span class="event-date">Dec 2018</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERESTS -->
+<section id="interests">
+  <div style="max-width:1400px; margin:0 auto;">
+    <div class="section-header reveal">
+      <span class="section-num">05 —</span>
+      <h2 class="section-title">Beyond Work</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="interests-grid reveal">
+      <a href="https://aelhoud.me/astrophotography/index.html" class="interest-card">
+        <div class="interest-num">01 ——</div>
+        <div class="interest-title">Astrophotography</div>
+        <div class="interest-sub">Capturing the cosmos</div>
+      </a>
+      <a href="https://aelhoud.me/books.html" class="interest-card">
+        <div class="interest-num">02 ——</div>
+        <div class="interest-title">Books Zone</div>
+        <div class="interest-sub">Curated reads</div>
+      </a>
+      <a href="https://aelhoud.me/gaming-zone.html" class="interest-card">
+        <div class="interest-num">03 ——</div>
+        <div class="interest-title">Gaming Zone</div>
+        <div class="interest-sub">Interactive adventures</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-left reveal">
+    <div class="section-header" style="margin-bottom:2rem">
+      <span class="section-num">06 —</span>
+      <h2 class="section-title">Contact</h2>
+    </div>
+    <p class="contact-text">
+      Interested in collaborating on AI projects, digital transformation, or research? I'm always open to meaningful conversations and new opportunities.
+    </p>
+    <a href="mailto:contact@aelhoud.me" class="contact-email">contact@aelhoud.me</a>
+    <div class="contact-links">
+      <a href="https://aelhoud.me/phd-thesis.html" class="contact-link">
+        <span>PhD Thesis</span>
+        <span class="contact-link-arrow">→</span>
+      </a>
+      <a href="https://scholar.google.com" class="contact-link">
+        <span>Google Scholar</span>
+        <span class="contact-link-arrow">→</span>
+      </a>
+      <a href="https://www.linkedin.com" class="contact-link">
+        <span>LinkedIn Profile</span>
+        <span class="contact-link-arrow">→</span>
+      </a>
+    </div>
+  </div>
+  <div class="contact-right reveal" style="transition-delay:0.2s">
+    <div class="availability-badge">
+      <span class="availability-dot"></span>
+      Available for Collaboration
+    </div>
+    <blockquote class="contact-quote">
+      "AI holds transformative power in reshaping our work dynamics — I am enthusiastic about contributing to the ongoing digital revolution."
+    </blockquote>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Anass Elhoud — Paris, France</span>
+  <span class="footer-copy">© 2024 · All rights reserved</span>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX; mouseY = e.clientY;
+    cursor.style.left = mouseX - 4 + 'px';
+    cursor.style.top = mouseY - 4 + 'px';
+  });
+
+  function animateRing() {
+    ringX += (mouseX - ringX) * 0.12;
+    ringY += (mouseY - ringY) * 0.12;
+    ring.style.left = ringX - 18 + 'px';
+    ring.style.top = ringY - 18 + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'scale(2)';
+      ring.style.transform = 'scale(1.5)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'scale(1)';
+      ring.style.transform = 'scale(1)';
+    });
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Nav highlight on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 200) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current
+        ? 'var(--accent)' : '';
+    });
+  });
+</script>
+</body>
+</html>
